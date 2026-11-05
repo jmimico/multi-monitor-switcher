@@ -1,26 +1,59 @@
-# Display Mode Switcher (Work / Personal)
+<p align="center">
+  <img src="logo.png" width="150" alt="multi-monitor-switcher logo">
+</p>
 
-One-click switching between two monitor configurations on this PC:
+# multi-monitor-switcher
 
-| Mode     | MSI MAG401QR (bottom, 3440x1440) | XF270HU / Acer (top, 2560x1440) |
-|----------|----------------------------------|----------------------------------|
-| **Work**     | turned off ("disconnected")      | **main display**, at (0,0)       |
-| **Personal** | **main display**, at (0,0)       | extended, above and right (420,-1440) |
+<p align="center">
+  <b>One-click Work / Personal display mode switcher for Windows 11</b>
+</p>
+
+<p align="center">
+  <img src="modes.png" alt="Two modes, one click — work and personal display layouts" width="900">
+</p>
+
+A small tool for people whose desk has more than one monitor — and more than one
+owner. Double-click a desktop shortcut and Windows rearranges (or deactivates)
+your displays in ~1-2 seconds: which one is **primary**, which are **extended**
+where, and which are **turned off** entirely.
+
+**Built for Windows 11.** Developed and tested on Windows 11 25H2 (build 26200);
+see [Requirements](#requirements) for details.
+
+The author's configuration, for reference — the tool works with any layout you
+describe in `profiles.json`:
+
+| Mode       | MSI MAG401QR (bottom, 3440x1440) | XF270HU / Acer (top, 2560x1440) |
+|------------|----------------------------------|----------------------------------|
+| **Work**       | turned off ("disconnected")      | **main display**, at (0,0)       |
+| **Personal**   | **main display**, at (0,0)       | extended, above and right (420,-1440) |
 
 The laptop's own screen (lid closed) is ignored by both modes.
 
 ## Usage
 
 - Double-click the **"Work Mode"** or **"Personal Mode"** desktop shortcut.
-- Or from a terminal:
-  - `powershell -NoProfile -ExecutionPolicy Bypass -File .\DisplayModes\Set-WorkMode.ps1`
-  - `powershell -NoProfile -ExecutionPolicy Bypass -File .\DisplayModes\Set-PersonalMode.ps1`
-  - `powershell -NoProfile -ExecutionPolicy Bypass -File .\DisplayModes\Show-DisplayState.ps1` (read-only status)
+- Or from a terminal (PowerShell is built into Windows):
+  - `powershell -NoProfile -ExecutionPolicy Bypass -File .\Set-WorkMode.ps1`
+  - `powershell -NoProfile -ExecutionPolicy Bypass -File .\Set-PersonalMode.ps1`
+  - `powershell -NoProfile -ExecutionPolicy Bypass -File .\Show-DisplayState.ps1` (read-only status)
 
 Switching takes ~1-2 seconds. If a shortcut fails, a message box shows the reason.
 
 The mode you switch to is **persisted across reboots** (it is written to Windows'
 display database, the same way the Display Settings dialog does it).
+
+## Requirements
+
+- **Windows 11** — developed and tested on Windows 11 25H2 (build 26200).
+  The tool calls the *current* Display Configuration API signature
+  (`SetDisplayConfig` with 5 parameters), which recent Windows 11 builds export.
+  Older Windows 10 builds export the legacy 8-parameter signature and are
+  **not supported**.
+- Two or more displays. (The committed profile targets two external monitors;
+  the tool handles any number — see [Customizing](#customizing).)
+- Nothing else: plain Windows PowerShell 5.1 (built into Windows), no admin
+  rights, no third-party dependencies.
 
 ## Files
 
@@ -34,6 +67,8 @@ display database, the same way the Display Settings dialog does it).
 | `Set-PersonalMode.ps1`  | One-click: personal mode |
 | `Show-DisplayState.ps1` | Shows current displays, GDI view, and which mode matches |
 | `New-DisplayModeShortcuts.ps1` | (Re)creates the desktop shortcuts |
+| `logo.png` / `modes.png`  | README graphics |
+| `tools/make-images.ps1`   | Regenerates the two graphics with System.Drawing (dev convenience) |
 
 ## How it works
 
