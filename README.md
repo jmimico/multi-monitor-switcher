@@ -28,7 +28,8 @@ display database, the same way the Display Settings dialog does it).
 |------|---------|
 | `DisplayModes.psm1`     | PowerShell module: drives the engine, verifies the result, corrects the primary if needed |
 | `DisplayModes.cs`       | C# core using the Win32 Display Configuration API (`QueryDisplayConfig` / `SetDisplayConfig`) |
-| `profiles.json`         | **Your configuration**: which monitor is which (by EDID) and what each mode looks like |
+| `profiles.json`         | **The active configuration**: which monitor is which (by EDID) and what each mode looks like. The committed copy is the author's setup — replace it with your own (see below). |
+| `profiles.example.json` | Blank template describing every field |
 | `Set-WorkMode.ps1`      | One-click: work mode |
 | `Set-PersonalMode.ps1`  | One-click: personal mode |
 | `Show-DisplayState.ps1` | Shows current displays, GDI view, and which mode matches |
@@ -53,6 +54,21 @@ Turning a monitor off means its display path is deactivated - the GPU stops driv
 so the monitor goes into standby on its own. Resolution and refresh rate (160 Hz on the
 MSI, 144/160 on the Acer) are preserved from the live configuration; if a monitor had to
 be re-activated without a cached mode, Windows best-mode logic selects the native mode.
+
+## Setting up on another machine
+
+1. Copy `profiles.example.json` to `profiles.json`.
+2. Run `Show-DisplayState.ps1` — every active display lists its **EDID** (`mfr:prod` in hex).
+3. Fill each monitor's `edidMfr`/`edidProd` with those values (the `friendlyName` is just a label).
+4. Give your monitors any tags you like (`monitor-a`, `work-screen`, ...) and define your
+   modes' `paths`: which monitors are active, and their `position`. The monitor at `[0,0]`
+   is the primary; to turn a monitor off, set `"active": false`.
+5. Test with `Set-WorkMode.ps1` / `Set-PersonalMode.ps1` (or add your own mode name and
+   script), then run `New-DisplayModeShortcuts.ps1` for desktop shortcuts.
+
+The committed `profiles.json` is the author's real setup (MSI MAG401QR bottom + Acer
+XF270HU top) — feel free to keep it as a reference, but the tool only ever reads
+`profiles.json`.
 
 ## Customizing
 

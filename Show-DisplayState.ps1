@@ -18,7 +18,7 @@ foreach ($p in $active) {
     $label = if ($tag) { "{0} ({1})" -f $tag.ToUpper(), $p.name } else { $p.name }
     $mark = ""
     if ($p.x -eq 0 -and $p.y -eq 0) { $mark = "  <-- at (0,0) = primary" }
-    Write-Host ("  {0,-28} {1,5}x{2,-5} @ ({3},{4}){5}" -f $label, $p.w, $p.h, $p.x, $p.y, $mark)
+    Write-Host ("  {0,-28} EDID {1:X4}:{2:X4}  {3,5}x{4,-5} @ ({5},{6}){7}" -f $label, $p.mfr, $p.prod, $p.w, $p.h, $p.x, $p.y, $mark)
 }
 if (-not $active) { Write-Host "  (none)" }
 

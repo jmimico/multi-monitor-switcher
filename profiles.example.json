@@ -1,0 +1,31 @@
+{
+  "_comment": "TEMPLATE - copy this file to profiles.json and fill in your values. Find your monitor EDIDs by running Show-DisplayState.ps1 (each active display shows its EDID as mfr:prod, hex). Positions are virtual-desktop pixels; the monitor at [0,0] becomes the primary. Negative y = above, negative x = left.",
+  "monitors": {
+    "monitor-a": {
+      "edidMfr": "0000",
+      "edidProd": "0000",
+      "friendlyName": "FILL-ME-IN e.g. 'MSI MAG401QR'"
+    },
+    "monitor-b": {
+      "edidMfr": "0000",
+      "edidProd": "0000",
+      "friendlyName": "FILL-ME-IN e.g. 'XF270HU'"
+    }
+  },
+  "modes": {
+    "work": {
+      "description": "Example: monitor-b is the main display; monitor-a is turned off.",
+      "paths": [
+        { "monitor": "monitor-b", "active": true,  "position": [0, 0] },
+        { "monitor": "monitor-a", "active": false, "position": [0, 0] }
+      ]
+    },
+    "personal": {
+      "description": "Example: monitor-a is the main display at (0,0); monitor-b is extended to its right.",
+      "paths": [
+        { "monitor": "monitor-a", "active": true, "position": [0, 0] },
+        { "monitor": "monitor-b", "active": true, "position": [3440, 0] }
+      ]
+    }
+  }
+}
