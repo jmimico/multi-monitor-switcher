@@ -1,0 +1,31 @@
+{
+  "_comment": "Display mode profiles. Monitor identity is by EDID (edidMfr/edidProd, hex) - stable across reboots and port swaps. friendlyName is informational only. positions are virtual-desktop pixels relative to (0,0).",
+  "monitors": {
+    "msi": {
+      "edidMfr": "6936",
+      "edidProd": "3EA5",
+      "friendlyName": "MSI MAG401QR"
+    },
+    "acer": {
+      "edidMfr": "7204",
+      "edidProd": "549",
+      "friendlyName": "XF270HU"
+    }
+  },
+  "modes": {
+    "work": {
+      "description": "Acer (top) is the main display at (0,0); MSI (bottom) is disconnected/turned off.",
+      "paths": [
+        { "monitor": "acer", "active": true,  "position": [0, 0] },
+        { "monitor": "msi",  "active": false, "position": [0, 0] }
+      ]
+    },
+    "personal": {
+      "description": "MSI (bottom) is the main display at (0,0); Acer (top) is extended above it (current layout: 420px right, 1440px up).",
+      "paths": [
+        { "monitor": "msi",  "active": true, "position": [0, 0] },
+        { "monitor": "acer", "active": true, "position": [420, -1440] }
+      ]
+    }
+  }
+}
